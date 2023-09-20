@@ -1,0 +1,15 @@
+{
+  "index": "Welcome",
+  "press": "Press Kit",
+  "-- Business": {
+    "type": "separator"
+  },
+  "docs": {
+    "title": "Docs",
+    "type": "page",
+    "href": "https://docs.interwv.com",
+    "newWindow": true
+  },
+  "growth-strategy": "Growth Strategy",
+  "decisions": "Decisions"
+}
