@@ -13,13 +13,13 @@ export default {
   docsRepositoryBase: "https://github.com/interweave-hq/contract-book/blob/main",
   useNextSeoProps() {
     return {
-      titleTemplate: "%s – Interweave Contract Book"
+      titleTemplate: "%s – Interweave Company Book"
     };
   },
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
-    const url = "https://contract-book.interwv.com" + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+    const url = "https://company.interwv.com" + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
     return (
       <>
@@ -31,7 +31,7 @@ export default {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={frontMatter.title || "Interweave Contract Book"} />
+        <meta property="og:title" content={frontMatter.title || "Interweave Company Book"} />
         <meta property="og:image" content="/interweave-meta.jpg" />
         <meta
           property="og:description"
