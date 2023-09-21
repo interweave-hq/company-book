@@ -10,7 +10,7 @@ export default {
   banner: {
     text: "⚠️ This website is not our docs! Please visit https://docs.interwv.com for documentation. ⚠️"
   },
-  docsRepositoryBase: "https://github.com/interweave-hq/interweave/blob/docs",
+  docsRepositoryBase: "https://github.com/interweave-hq/contract-book/blob/main",
   useNextSeoProps() {
     return {
       titleTemplate: "%s – Interweave Contract Book"
