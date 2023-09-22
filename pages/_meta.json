@@ -11,5 +11,6 @@
     "newWindow": true
   },
   "growth-strategy": "Growth Strategy",
-  "decisions": "Decisions"
+  "decisions": "Decisions",
+  "ai-prompt": "AI Prompt Starter"
 }
