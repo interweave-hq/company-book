@@ -1,0 +1,49 @@
+# Naming Events
+
+It's important to come up with a standardized pattern for events, that way we know what to look for and how to construct funnels and cohorts.
+
+Most analytics tools, including Mixpanel, use a single string to identify an event. That string can be pretty much _anything_, so it's up to us to organize what those strings look like.
+
+## Object-Action Framework
+
+I found [an article by Compass describing](https://nimblehq.co/compass/product/analytics/event-tracking-guidelines/) a pattern called the Object-Action framework. This seems like a good mental model to branch off of.
+
+### Adding A Name
+
+While their guide only outlines Objects and Actions, I think it's important to add one more tier, `Name`, for filtering more specifically.
+
+## Rules
+
+1. Each piece of a name (`Object`, `Action`, `Name`) is called a "tier"
+2. Tiers are separated by an underscore `_`
+3. Multi-word names are separated by a dash `-`
+4. An `Object` and `Action` are required, a `Name` is optional
+5. The order they appear in a string is `Object` first, `Action` second, and `Name` third
+
+## Examples
+
+- `page_viewed_interfacer`
+- `page_viewed_home-screen`
+- `checkout_begun`
+- `header-button_clicked_docs`
+- `user_created`
+- `request_made_get`
+- `request_made_patch`
+
+## Tracking The Most Narrow Events
+
+With this approach, we can embrace the flexibility and hierarchy to track multiple events at once if a `Name` is used.
+
+For example, if we're tracking a request, we'll make the most specific call `track('request_made_patch')`. Within that track function, we can actually track two events: the request _and_ the patch request. With the names delineated via underscores, we can do some logic like this:
+
+```js
+function track(eventName) {
+  const [object, action, name] = eventName.split("_");
+  if (name) {
+    sendTrackEvent(`${object}_${action}`); // Track the broader event as well
+  }
+  sendTrackEvent(eventName);
+}
+```
+
+Inside our interface, we can now do a filter comparing the frequency of a given `Name` inside a given `Object Action`. For example, imagine each link in a header has an event: `header-link_click_docs` or `header-link_click_dashboard`. We can then see the event `header-link_click` happened 500 times, and the majority, lets say 400, of those were on `header-link_click_dashboard`. Then we would know to emphasize that dashboard link.
