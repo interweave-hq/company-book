@@ -1,0 +1,51 @@
+import { Callout } from "nextra-theme-docs";
+
+# Engineering Onboarding Requests
+
+Onboarding is important to our [growth strategy](/growth-strategy). Specifically point #2:
+
+> 2. How do you get them to an a-ha moment as quickly as possible
+
+The idea is this: a user will find our homepage (the _how_ is not a concern here specifically), and from there, they will enter in an API URL. From that URL, we will generate a fully functional interface, which will trigger that "a-ha!" moment relatively quickly. Expecting a user to create an interface configuration from scratch is an unrealistic expectation.
+
+This document is a reflection of a bet that the aforementioned process will get users to their a-ha! moment as quick as possible.
+
+## A Reminder To Launch Quickly
+
+While this onboarding process will contribute heavily to the conversion percentage, aka the C value outlined in our [growth strategy's sales formula](/growth-strategy), it's important to remember that this process is not required before launching. We can start the feedback loop before this exists, and the fact that this process doesn't exist will not prevent interested users from using Interweave.
+
+## Implementation
+
+Authentication will be optional. We'll try to fetch an existing user, but it is not required. We don't want to fuck up our backend business logic too much, so functionality will be limited if they're not an existing user to make things easier for us. For example, saving API tokens won't work (or will be insecure) without a user attached.
+
+<Callout>
+  When onboarding, [every click is a miracle](https://twitter.com/nikitabier/status/1608310890243444738). Let's minimize
+  clicks, minimize cognitive load, make good assumptions, and get them to the interface as fast as possible. No friction should come from our end of things.
+
+> When designing a consumer product, you should consider every tap by a user to be a miracle. The motivation to stop using a new app will always be stronger than to use it. - Nikita Bier
+
+</Callout>
+
+### Existing User
+
+- Option to assign to a project
+- If no project is assigned, we can create one automatically
+- Later on, the user can move the interface to a project
+
+### New User
+
+- Create a "ghost user" that has no identity, indicated by field `has_no_identity` (or should we assume fields without email have no identity?)
+- When a new user joins the site, we can create a ghost user and send a cookie immediately
+- This way we can continue normal business logic as best as we can without interrupting things
+- Ghost user can have a default name, picture and whatever else set (we'll definitely want them to think they _don't_ have an account, so let's hide that)
+- Limit ghost users to 20 requests or something
+- Automatically create project (hide assign option)
+- Save interface
+- Create cleanup task that deletes the ghost user, project and interface after 7 days or so
+- How do we go from ghost user to real user?
+  - Show normal flags as if they don't have an account
+  - Continue through account setup as if they've never created a user (in their eyes, they haven't)
+  - Assign email to their existing user account, set `has_no_identity` to false
+  - Redirect to the interface they made
+
+## Handling Interfaces
